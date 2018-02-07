@@ -2,23 +2,18 @@ import pandas as pd
 
 
 df=pd.read_csv("employee_data1.csv")
+df2=pd.read_csv("employee_data2.csv")
 
-ed=pd.read_csv("employee_data2.csv")
-
-frame = [df,ed]
+frame = [df,df2]
 
 employee_table= pd.concat(frame) 
 
 list=employee_table['Name'].str.split(' ',expand=True)       
-
 employee_table['First Name']=list[0] 
-
 employee_table['Last Name']=list[1] 
-
 del employee_table['Name'] 
 
 employee_table['DOB'] = pd.to_datetime(employee_table.DOB) 
-
 employee_table['DOB'] = employee_table['DOB'].dt.strftime("%m/%d/%Y")  
 
 employee_table['SSN']= "***-**-"+employee_table['SSN'].str[7:11]
@@ -77,7 +72,6 @@ us_state_abbrev = {
 }
 
 state_abbrev = [us_state_abbrev[i] for i in employee_table['State']]
-
 state_abbrev = pd.Series(state_abbrev) 
 
 employee_table['State'] = state_abbrev 
